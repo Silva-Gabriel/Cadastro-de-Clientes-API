@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "d6VyI2LbEk+L6AQFye3BqWnTg2IlbTAI2um9hZRmIn9j00oKYYSZlr52opDj0NRYFSa7BgXc8I70XkhVsmgEgQ==",
+  "dgSpecHash": "63sc5r3mujoWpCryVSBCACKDcKHELGxz3lYiGLs45rWZjripXOfESZQ5ujVXcrtx0pSuaPfP0fapW3fRxTM8DQ==",
   "success": true,
-  "projectFilePath": "C:\\Development\\GIT\\C#\\CadastroDeClientes\\CadastroDeClientes\\CadastroDeClientes.csproj",
+  "projectFilePath": "C:\\Development\\GIT\\C#\\Cadastro-de-Clientes-API\\CadastroDeClientes\\CadastroDeClientes.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

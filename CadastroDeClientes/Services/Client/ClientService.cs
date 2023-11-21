@@ -20,6 +20,14 @@ namespace CadastroDeClientes.Services.Client
         }
         public async Task<ActionResult<CreateClientDto>> Create(ClientModel clientModel)
         {
+            var firstDigit = CPFDigitValidation(clientModel.CPF, 10);
+            var secondDigit = CPFDigitValidation((clientModel.CPF + firstDigit), 11);
+            var digits_verifier = clientModel.CPF.Substring(9, 2);
+            var digits = (firstDigit + secondDigit).ToString();
+
+            if (digits_verifier != digits)
+                throw new Exception("Os digitos verificadores não batem! Por favor, entre com um CPF válido!");
+
             if (clientModel == null)
             {
                 throw new Exception("Preencha todos os dados mínimos!");
@@ -61,10 +69,9 @@ namespace CadastroDeClientes.Services.Client
             ClientModel client = _context.Clients.Find(id);
 
             if (client == null)
-                throw new Exception("O Usuário não foi encontrado!");
+                return ErrorResponse.EntityNotFoundResponse();
 
             // Dados a serem modificados
-            client.CPF = clientModel.CPF;
             client.Name = clientModel.Name;
             client.LastName = clientModel.LastName;
 
@@ -115,6 +122,50 @@ namespace CadastroDeClientes.Services.Client
             var response = _mapper.Map<GetClientDto>(client);
 
             return SucessResponse.OkResponse(response);
+        }
+
+        static string CPFDigitValidation(string cpf, int number)
+        {
+            var cpf_validation = cpf.Substring(0, 9).ToArray();
+
+            var digits = CharToInt(cpf_validation);
+            var result = 0;
+
+            foreach (var digit in digits)
+            {
+                result = result + digit * number;
+                Console.WriteLine($"{number} x {digit} = {number * digit} > {result}");
+                number--;
+            }
+
+            Console.WriteLine("Verificação Primeiro Digito: " + result);
+            result = result % 11;
+
+            if (result == 1 || result == 0)
+                return "0";
+            else
+                result = 11 - result;
+
+            return result.ToString();
+        }
+
+        static List<int> CharToInt(char[] charArray)
+        {
+            var digits = new List<int>();
+            int validDigit = 0;
+
+            foreach (char digit in charArray)
+            {
+                if (char.IsDigit(digit))
+                {
+
+                    validDigit = digit - '0';
+                }
+
+                digits.Add(validDigit);
+            }
+
+            return digits;
         }
     }
 }

@@ -3384,11 +3384,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Development\\GIT\\C#\\CadastroDeClientes\\CadastroDeClientes\\CadastroDeClientes.csproj",
+      "projectUniqueName": "C:\\Development\\GIT\\C#\\Cadastro-de-Clientes-API\\CadastroDeClientes\\CadastroDeClientes.csproj",
       "projectName": "CadastroDeClientes",
-      "projectPath": "C:\\Development\\GIT\\C#\\CadastroDeClientes\\CadastroDeClientes\\CadastroDeClientes.csproj",
+      "projectPath": "C:\\Development\\GIT\\C#\\Cadastro-de-Clientes-API\\CadastroDeClientes\\CadastroDeClientes.csproj",
       "packagesPath": "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\",
-      "outputPath": "C:\\Development\\GIT\\C#\\CadastroDeClientes\\CadastroDeClientes\\obj\\",
+      "outputPath": "C:\\Development\\GIT\\C#\\Cadastro-de-Clientes-API\\CadastroDeClientes\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\g.da.silva.santana\\AppData\\Roaming\\NuGet\\NuGet.Config",
