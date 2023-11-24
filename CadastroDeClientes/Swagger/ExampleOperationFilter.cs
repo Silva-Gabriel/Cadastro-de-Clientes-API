@@ -37,7 +37,7 @@ namespace CadastroDeClientes.Swagger
                 }
             }
 
-            if (context.ApiDescription.HttpMethod.ToUpper() == "PUT" && context.ApiDescription.RelativePath == "api/Client")
+            if (context.ApiDescription.HttpMethod.ToUpper() == "PUT" && context.ApiDescription.RelativePath == "api/Client/{id}")
             {
 
                 if (operation.RequestBody?.Content == null || context.MethodInfo == null)
@@ -48,8 +48,7 @@ namespace CadastroDeClientes.Swagger
                 var example = new Dictionary<string, object>
             {
                 { "Name", "Jean" },
-                { "LastName", "Carlos" },
-                { "Birthdate", new DateTime(2000, 7, 8)}
+                { "LastName", "Carlos" }
             };
 
                 var mediaType = operation.RequestBody.Content.FirstOrDefault().Value;
@@ -58,8 +57,7 @@ namespace CadastroDeClientes.Swagger
                     mediaType.Example = new OpenApiObject
                     {
                         ["Name"] = new OpenApiString((string)example["Name"]),
-                        ["LastName"] = new OpenApiString((string)example["LastName"]),
-                        ["Birthdate"] = new OpenApiDateTime((DateTime)example["Birthdate"])
+                        ["LastName"] = new OpenApiString((string)example["LastName"])
                     };
                 }
             }

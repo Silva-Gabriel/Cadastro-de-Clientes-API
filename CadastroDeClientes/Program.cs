@@ -32,18 +32,6 @@ builder.Services.AddSwaggerGen(c => {
 
     c.OperationFilter<ExampleOperationFilter>();
 
-    c.MapType<ClientValueDto>(() => new OpenApiSchema
-    {
-        Type = "object",
-        Properties = new Dictionary<string, OpenApiSchema>
-            {
-                { "CPF", new OpenApiSchema { Type = "string", Example = new OpenApiString("490.455.018-80")}},
-                { "Name", new OpenApiSchema { Type = "string", Example = new OpenApiString("Gabriel")}},
-                { "LastName", new OpenApiSchema { Type = "string", Example = new OpenApiString("Santana")}},
-                { "Birthdate", new OpenApiSchema { Type = "DateTime", Example = new OpenApiDateTime(DateTime.UtcNow)}}
-            }
-    });
-
     var xmlFile = "CadastroDeClientes.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);

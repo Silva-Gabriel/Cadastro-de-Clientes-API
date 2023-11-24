@@ -16,6 +16,9 @@ namespace CadastroDeClientes.Mapper
 
             CreateMap<ClientModel, CreateClientDto>()
                 .ReverseMap();
+
+            CreateMap<ClientModel, EditClientDto>()
+                .ReverseMap();
         }
     }
 }

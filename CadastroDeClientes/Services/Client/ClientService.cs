@@ -19,7 +19,7 @@ namespace CadastroDeClientes.Services.Client
             _context = context;
             _mapper = mapper;
         }
-        public async Task<ActionResult<ClientModel>> Create(CreateClientDto clientDto)
+        public async Task<ActionResult<GetClientDto>> Create(CreateClientDto clientDto)
         {
             // Mapeia a entidade clientDto para ClientModel que é a classe principal com todos os campos
             var clientModel = _mapper.Map<ClientModel>(clientDto);
@@ -39,13 +39,18 @@ namespace CadastroDeClientes.Services.Client
             var digits = (firstDigit + secondDigit).ToString();
 
             // Valida se a sequência de caracteres é válida para o nome
-            var isValidSequenceOfName = isValidSequenceOfCaracteres(clientModel.Name);
+            var isValidSequenceOfName = IsValidSequenceOfCaracteres(clientModel.Name);
             // Valida se a sequência de caracteres é válida para o sobrenome
-            var isValidSequenceOfLastName = isValidSequenceOfCaracteres(clientModel.LastName);
+            var isValidSequenceOfLastName = IsValidSequenceOfCaracteres(clientModel.LastName);
             // Valida se a quantidade de caracteres repetidos é válida para o nome
-            var isValidRepetitionOfName = isValidMaximumLettersRepetition(clientModel.Name);
+            var isValidRepetitionOfName = IsValidMaximumLettersRepetition(clientModel.Name);
             // Valida se a quantidade de caracteres repetidos é válida para o sobrenome
-            var isValidRepetitionOfLastName = isValidMaximumLettersRepetition(clientModel.LastName);
+            var isValidRepetitionOfLastName = IsValidMaximumLettersRepetition(clientModel.LastName);
+            
+            // Valida a quantidade de palavras no nome
+            var isValidNumberOfWordsName = IsValidNumberOfWords(clientModel.Name);
+            // Valida a quantidade de palavras no sobrenome
+            var isValidNumberOfWordsLastName = IsValidNumberOfWords(clientModel.LastName);
 
             // Lista para agregar os erros de nome e sobrenome respectivamente
             var name_validation_errors = new List<string>();
@@ -58,7 +63,7 @@ namespace CadastroDeClientes.Services.Client
 
             // Validação de CPF
             if (digits_verifier != digits)
-                throw new Exception("Os digitos verificadores não batem! Por favor, entre com um CPF válido!");
+                return ErrorResponse.CPFDigitsNotMatch();
 
             if (consultCPF.Count >= 1)
                 return ErrorResponse.UserAlreadyExists();
@@ -67,10 +72,10 @@ namespace CadastroDeClientes.Services.Client
             clientModel.CPF = cpf;
 
             // Validação de nome e sobrenome
-            if (isValidSequenceOfName || isValidRepetitionOfName)
+            if (isValidSequenceOfName || isValidRepetitionOfName || isValidNumberOfWordsName)
                 name_validation_errors.Add("invalid-field-name");
 
-            if (isValidSequenceOfLastName || isValidRepetitionOfLastName)
+            if (isValidSequenceOfLastName || isValidRepetitionOfLastName || isValidNumberOfWordsLastName)
                 name_validation_errors.Add("invalid-field-lastname");
 
             if(name_validation_errors.Count > 0)
@@ -83,11 +88,8 @@ namespace CadastroDeClientes.Services.Client
             _context.Add(clientModel);
             await _context.SaveChangesAsync();
 
-            // Mapeia a entidade clientModel para um modelo de resposta CreateClientDto
-            var response = _mapper.Map<CreateClientDto>(clientModel);
-
             // retorna um objeto de resposta personalizado
-            return SucessResponse.CreateResponse(response);
+            return SucessResponse.CreateResponse(clientModel);
         }
 
         public async Task<ActionResult<ClientModel>> Delete(long id)
@@ -110,11 +112,7 @@ namespace CadastroDeClientes.Services.Client
         {
             var client = _context.Clients.Find(id);
             var clientMap = _mapper.Map<ClientModel>(clientDto);
-
-            var isValidSequenceOfName = isValidSequenceOfCaracteres(clientDto.Name);
-            var isValidSequenceOfLastName = isValidSequenceOfCaracteres(clientDto.LastName);
-            var isValidRepetitionOfName = isValidMaximumLettersRepetition(clientDto.Name);
-            var isValidRepetitionOfLastName = isValidMaximumLettersRepetition(clientDto.LastName);
+            
             var name_validation_errors = new List<string>();
 
             if (client == null)
@@ -123,29 +121,32 @@ namespace CadastroDeClientes.Services.Client
             // Dados a serem modificados
             if (!string.IsNullOrEmpty(clientMap.Name))
             {
-                if (isValidSequenceOfName || isValidRepetitionOfName)
+                var isValidSequenceOfName = IsValidSequenceOfCaracteres(clientDto.Name);
+                var isValidRepetitionOfName = IsValidMaximumLettersRepetition(clientDto.Name);
+                var isValidNumberOfWordsName = IsValidNumberOfWords(clientDto.Name);
+
+                if (isValidSequenceOfName || isValidRepetitionOfName || isValidNumberOfWordsName)
                     name_validation_errors.Add("invalid-field-name");
             }
 
             if (!string.IsNullOrEmpty(clientMap.LastName))
             {
-                if (isValidSequenceOfLastName || isValidRepetitionOfLastName)
+                var isValidSequenceOfLastName = IsValidSequenceOfCaracteres(clientDto.LastName);
+                var isValidRepetitionOfLastName = IsValidMaximumLettersRepetition(clientDto.LastName);
+                var isValidNumberOfWordsLastName = IsValidNumberOfWords(clientDto.LastName);
+
+                if (isValidSequenceOfLastName || isValidRepetitionOfLastName || isValidNumberOfWordsLastName)
                     name_validation_errors.Add("invalid-field-lastname");
             }
 
             if (name_validation_errors.Count > 0)
                 return ErrorResponse.InvalidNameOrLastName(name_validation_errors);
 
-            client.Name = clientMap.Name;
-            client.LastName = clientMap.LastName;
+            if(clientDto.Name != null)
+                client.Name = clientMap.Name;
 
-            if (clientMap.Birthdate != DateTime.MinValue)
-            {
-                if (clientDto.Birthdate.Date >= DateTime.Now.Date)
-                    return ErrorResponse.InvalidBirthdate();
-
-                client.Birthdate = clientMap.Birthdate;
-            }
+            if (clientDto.LastName != null)
+                client.LastName = clientMap.LastName;
 
             _context.Clients.Update(client);
             await _context.SaveChangesAsync();
@@ -174,6 +175,13 @@ namespace CadastroDeClientes.Services.Client
             var response = _mapper.Map<List<GetClientDto>>(clients);
 
             return SucessResponse.OkListResponse(response);
+        }
+
+        public async Task<ActionResult<List<ClientModel>>> GetAllFullAcess()
+        {
+            var clients = await _context.Clients.ToListAsync();
+
+            return SucessResponse.OkListFulAccessResponse(clients);
         }
 
         public async Task<ActionResult<GetClientDto>> Inactive(long id)
@@ -240,31 +248,24 @@ namespace CadastroDeClientes.Services.Client
             return digits;
         }
 
-        static bool isValidNumberOfWords(string word)
+        static bool IsValidNumberOfWords(string word)
         {
-            var regex_code_two_group = @"\b(\w+)\1\b";
-            var regex_code_three_group = @"\b(\w+)\1\1\b";
+            var regex_code_two_group = new Regex(@"\b(\w+)\1\b", RegexOptions.IgnoreCase);
+            var regex_code_three_group = new Regex(@"\b(\w+)\1\1\b", RegexOptions.IgnoreCase);
 
-            if (Regex.IsMatch(word, regex_code_two_group))
-            {
-                return false;
-            }
-            else if (Regex.IsMatch(word, regex_code_three_group))
-            {
-                return false;
-            }
+            if (regex_code_two_group.IsMatch(word) || regex_code_three_group.IsMatch(word))
+                return true;
 
-            return true;
+            return false;
         }
-        static bool isValidSequenceOfCaracteres(string word)
+        static bool IsValidSequenceOfCaracteres(string word)
         {
-            var sequence_keyboard = "qwertyuiopasdfghjklçzxcvbnmQWERTYUIOPASDFGHJKLÇZXCVBNM";
-            var sequence_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ";
+            var sequence_keyboard = "qwertyuiopasdfghjklçzxcvbnm";
+            var sequence_alphabet = "abcdefghijklmnopqrstuvwxyzáéíóúàâêôãõüç";
 
-            Console.WriteLine(word.Length);
-            for (int i = 0; i < word.Length - 2; i++)
+            for (int i = 0; i < word.Length - 3; i++)
             {
-                var substring = word.Substring(i, 3);
+                var substring = word.Substring(i, 4).ToLower();
 
                 if (sequence_keyboard.Contains(substring) || sequence_alphabet.Contains(substring))
                 {
@@ -276,7 +277,7 @@ namespace CadastroDeClientes.Services.Client
             return false;
         }
 
-        static bool isValidMaximumLettersRepetition(string word) {
+        static bool IsValidMaximumLettersRepetition(string word) {
             var regex_code = @"(.)\1{2,}";
 
             if (Regex.IsMatch(word, regex_code))

@@ -1,5 +1,4 @@
-﻿using CadastroDeClientes.Dtos.Client;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeClientes.Responses
 {
@@ -27,12 +26,14 @@ namespace CadastroDeClientes.Responses
 
         public static ObjectResult InvalidNameAndLastName(string errorMessage)
         {
-            string[] errors = new string[2];
+            var errors = new string[2];
             var message_split = errorMessage.Split(' ');
             errors[0] = message_split[0];
             errors[1] = message_split[1];
-            var statusCode = 409;
+
+            var statusCode = 400;
             var response = new ObjectResult(new { errors, statusCode });
+
             response.StatusCode = statusCode;
 
             return response;
@@ -40,7 +41,7 @@ namespace CadastroDeClientes.Responses
 
         public static ObjectResult InvalidNameOrLastName(List<string> errorMessage)
         {
-            var statusCode = 409;
+            var statusCode = 400;
             var response = new ObjectResult(new { errorMessage, statusCode });
             response.StatusCode = statusCode;
 
@@ -57,9 +58,18 @@ namespace CadastroDeClientes.Responses
             return response;
         }
 
-        internal static ActionResult<GetClientDto> EntityIsAlreadyInactive()
+        public static ObjectResult EntityIsAlreadyInactive()
         {
             var errorMessage = "entity-already-inactive";
+            var statusCode = 409;
+            var response = new ObjectResult(new { errorMessage, statusCode });
+            response.StatusCode = statusCode;
+
+            return response;
+        }
+        public static ObjectResult CPFDigitsNotMatch()
+        {
+            var errorMessage = "cpf-check-digits-not-match";
             var statusCode = 400;
             var response = new ObjectResult(new { errorMessage, statusCode });
             response.StatusCode = statusCode;

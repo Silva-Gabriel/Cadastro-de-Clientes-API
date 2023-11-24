@@ -10,6 +10,5 @@ namespace CadastroDeClientes.Dtos.Client
         [MaxLength(50)]
         [RegularExpression(@"([A-z]+\w)+", ErrorMessage = "Digite um sobrenome válido!")]
         public string LastName { get; set; }
-        public DateTime Birthdate { get; set; }
     }
 }

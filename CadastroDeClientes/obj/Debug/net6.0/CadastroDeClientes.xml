@@ -13,23 +13,75 @@
             </remarks>
             <param name="clientDto">Dados do cliente</param>
             <returns>Cliente Recém-criado</returns>
-            <response code="201"></response>
+            <response code="409">Conflict</response>>
+            <response code="400">BadRequest</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.GetAllFullAcess">
+            <summary>
+            Obter lista de clientes completa
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint retorna todos os dados de todos os clientes cadastrados</h1>
+            </remarks>
+            <returns>Lista de clientes completa</returns>
         </member>
         <member name="M:CadastroDeClientes.Controllers.ClientController.GetAll">
             <summary>
             Obter lista de clientes 
             </summary>
+            <remarks>
+            <h1 align="center">Este endpoint retorna todos os clientes da base de dados</h1>
+            </remarks>
             <returns>Lista de clientes</returns>
-            <response code="200">Sucess</response>
         </member>
         <member name="M:CadastroDeClientes.Controllers.ClientController.Get(System.Int64)">
             <summary>
             Obter um cliente específico
             </summary>
             <param name="id">Identificador do cliente</param>
+            <remarks>
+            <h1 align="center">Este endpoint retorna um cliente específico a partir do id informado no request</h1>
+            </remarks>
             <returns>Cliente específico</returns>
-            <response code="200">Sucess</response>>
-            <response code="404">Client Not Found</response>
+            <response code="404">NotFound</response>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Delete(System.Int32)">
+            <summary>
+            Deletar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint deleta um cliente a partir do id informado no request</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="204">NoContent</response>>
+            <response code="404">BadRequest</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Update(System.Int64,CadastroDeClientes.Dtos.Client.EditClientDto)">
+            <summary>
+            Atualizar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint atualiza um cliente existente a partir do id informado no request</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <param name="clientDto">Identificador do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="409">Conflict</response>>
+            <response code="400">BadRequest</response>>
+            <response code="404">NotFound</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Inactive(System.Int32)">
+            <summary>
+            Inativar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint inativa um cliente existente e ativo a partir do id informado no request</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="404">NotFound</response>>
+            <response code="409">Conflict</response>>
         </member>
         <member name="T:CadastroDeClientes.Migrations.clientmigration">
             <inheritdoc />

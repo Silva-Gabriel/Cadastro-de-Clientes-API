@@ -1,4 +1,5 @@
 ﻿using CadastroDeClientes.Dtos.Client;
+using CadastroDeClientes.Models;
 using CadastroDeClientes.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,9 +23,17 @@ namespace CadastroDeClientes.Responses
             return response;
         }
 
-        public static ObjectResult CreateResponse(CreateClientDto entity) 
+        public static ObjectResult OkListFulAccessResponse(List<ClientModel> entity)
         {
-            var response = new ObjectResult(new CreateModel(entity));
+            var response = new ObjectResult(entity);
+            response.StatusCode = 200;
+
+            return response;
+        }
+
+        public static ObjectResult CreateResponse(ClientModel entity) 
+        {
+            var response = new ObjectResult(new GetClientDto(entity));
             response.StatusCode = 201;
 
             return response;
