@@ -17,9 +17,9 @@ namespace CadastroDeClientes.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CPF = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Birthdate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerSince = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
@@ -38,7 +38,7 @@ namespace CadastroDeClientes.Migrations
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientModelId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -58,8 +58,8 @@ namespace CadastroDeClientes.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MainEmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AlternativeEmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AlternativeEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientModelId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -79,9 +79,9 @@ namespace CadastroDeClientes.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DDD = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DDD = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClientModelId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -95,15 +95,51 @@ namespace CadastroDeClientes.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AlternativeEmails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmailModelId = table.Column<long>(type: "bigint", nullable: false),
+                    AlternativeEmailModelId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlternativeEmails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AlternativeEmails_AlternativeEmails_AlternativeEmailModelId",
+                        column: x => x.AlternativeEmailModelId,
+                        principalTable: "AlternativeEmails",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AlternativeEmails_Emails_EmailModelId",
+                        column: x => x.EmailModelId,
+                        principalTable: "Emails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_ClientModelId",
                 table: "Addresses",
                 column: "ClientModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AlternativeEmails_AlternativeEmailModelId",
+                table: "AlternativeEmails",
+                column: "AlternativeEmailModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AlternativeEmails_EmailModelId",
+                table: "AlternativeEmails",
+                column: "EmailModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Emails_ClientModelId",
                 table: "Emails",
-                column: "ClientModelId");
+                column: "ClientModelId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Phones_ClientModelId",
@@ -118,10 +154,13 @@ namespace CadastroDeClientes.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Emails");
+                name: "AlternativeEmails");
 
             migrationBuilder.DropTable(
                 name: "Phones");
+
+            migrationBuilder.DropTable(
+                name: "Emails");
 
             migrationBuilder.DropTable(
                 name: "Clients");

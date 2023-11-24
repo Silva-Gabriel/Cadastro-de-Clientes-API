@@ -265,3 +265,6 @@ C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\obj\Debug\net6
 C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\obj\Debug\net6.0\CadastroDeClientes.pdb
 C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\obj\Debug\net6.0\CadastroDeClientes.genruntimeconfig.cache
 C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\obj\Debug\net6.0\ref\CadastroDeClientes.dll
+C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\bin\Debug\net6.0\CadastroDeClientes.xml
+C:\Development\GIT\C#\Cadastro-de-Clientes-API\CadastroDeClientes\obj\Debug\net6.0\CadastroDeClientes.xml

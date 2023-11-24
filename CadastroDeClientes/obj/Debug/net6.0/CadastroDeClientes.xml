@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CadastroDeClientes</name>
+    </assembly>
+    <members>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Create(CadastroDeClientes.Dtos.Client.CreateClientDto)">
+            <summary>
+            Cadastrar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint cadastra um cliente na base de dados de clientes</h1>
+            </remarks>
+            <param name="clientDto">Dados do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="201"></response>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.GetAll">
+            <summary>
+            Obter lista de clientes 
+            </summary>
+            <returns>Lista de clientes</returns>
+            <response code="200">Sucess</response>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Get(System.Int64)">
+            <summary>
+            Obter um cliente específico
+            </summary>
+            <param name="id">Identificador do cliente</param>
+            <returns>Cliente específico</returns>
+            <response code="200">Sucess</response>>
+            <response code="404">Client Not Found</response>
+        </member>
+        <member name="T:CadastroDeClientes.Migrations.clientmigration">
+            <inheritdoc />
+        </member>
+        <member name="M:CadastroDeClientes.Migrations.clientmigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CadastroDeClientes.Migrations.clientmigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CadastroDeClientes.Migrations.clientmigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

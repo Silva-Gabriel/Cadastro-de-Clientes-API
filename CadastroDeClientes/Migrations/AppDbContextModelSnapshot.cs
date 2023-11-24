@@ -34,17 +34,21 @@ namespace CadastroDeClientes.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CPF")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CustomerSince")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -52,6 +56,29 @@ namespace CadastroDeClientes.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AlternativeEmailModelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmailModelId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlternativeEmailModelId");
+
+                    b.HasIndex("EmailModelId");
+
+                    b.ToTable("AlternativeEmails");
                 });
 
             modelBuilder.Entity("CadastroDeClientes.Models.SubModels.AddressModel", b =>
@@ -71,10 +98,10 @@ namespace CadastroDeClientes.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("Region")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Region")
+                    b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -92,18 +119,20 @@ namespace CadastroDeClientes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("AlternativeEmailAddress")
+                    b.Property<string>("AlternativeEmail")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ClientModelId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("MainEmailAddress")
+                    b.Property<string>("MainEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientModelId");
+                    b.HasIndex("ClientModelId")
+                        .IsUnique();
 
                     b.ToTable("Emails");
                 });
@@ -120,12 +149,15 @@ namespace CadastroDeClientes.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("CountryCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DDD")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -133,6 +165,21 @@ namespace CadastroDeClientes.Migrations
                     b.HasIndex("ClientModelId");
 
                     b.ToTable("Phones");
+                });
+
+            modelBuilder.Entity("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", b =>
+                {
+                    b.HasOne("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", null)
+                        .WithMany("AlternativeEmails")
+                        .HasForeignKey("AlternativeEmailModelId");
+
+                    b.HasOne("CadastroDeClientes.Models.SubModels.EmailModel", "Email")
+                        .WithMany()
+                        .HasForeignKey("EmailModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Email");
                 });
 
             modelBuilder.Entity("CadastroDeClientes.Models.SubModels.AddressModel", b =>
@@ -149,8 +196,8 @@ namespace CadastroDeClientes.Migrations
             modelBuilder.Entity("CadastroDeClientes.Models.SubModels.EmailModel", b =>
                 {
                     b.HasOne("CadastroDeClientes.Models.ClientModel", "Client")
-                        .WithMany("Emails")
-                        .HasForeignKey("ClientModelId")
+                        .WithOne("Emails")
+                        .HasForeignKey("CadastroDeClientes.Models.SubModels.EmailModel", "ClientModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -175,6 +222,11 @@ namespace CadastroDeClientes.Migrations
                     b.Navigation("Emails");
 
                     b.Navigation("Phones");
+                });
+
+            modelBuilder.Entity("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", b =>
+                {
+                    b.Navigation("AlternativeEmails");
                 });
 #pragma warning restore 612, 618
         }

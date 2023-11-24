@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "63sc5r3mujoWpCryVSBCACKDcKHELGxz3lYiGLs45rWZjripXOfESZQ5ujVXcrtx0pSuaPfP0fapW3fRxTM8DQ==",
+  "dgSpecHash": "7xHkLRTHtpg4ilnKXfGpGEfOvfsBHMhHQPggVaLKd+rX+53x1UolHkdHCKfh4ze7nY66NXFJ3vDu74fGZjZbag==",
   "success": true,
   "projectFilePath": "C:\\Development\\GIT\\C#\\Cadastro-de-Clientes-API\\CadastroDeClientes\\CadastroDeClientes.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\swashbuckle.aspnetcore.annotations\\6.5.0\\swashbuckle.aspnetcore.annotations.6.5.0.nupkg.sha512",
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
     "C:\\Users\\g.da.silva.santana\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",

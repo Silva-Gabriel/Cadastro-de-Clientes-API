@@ -1,15 +1,14 @@
-﻿using CadastroDeClientes.Dtos;
+﻿using CadastroDeClientes.Dtos.Client;
 using Microsoft.AspNetCore.Http;
 
 namespace CadastroDeClientes.Models.Response
 {
-    public class OkListModel : ResponseModel
+    public class OkListModel
     {
         public List<GetClientDto> Entity { get; set; }
-        public OkListModel(List<GetClientDto> entity, string description)
+        public OkListModel(List<GetClientDto> entity)
         {
             Entity = entity;
-            Description = description;
         }
     }
 }

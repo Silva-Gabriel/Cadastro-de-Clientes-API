@@ -1,5 +1,4 @@
-﻿using CadastroDeClientes.Dtos;
-using CadastroDeClientes.Models;
+﻿using CadastroDeClientes.Dtos.Client;
 using CadastroDeClientes.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +8,7 @@ namespace CadastroDeClientes.Responses
     {
         public static ObjectResult OkResponse(GetClientDto entity)
         {
-            var description = "descrição qualquer";
-            var response = new ObjectResult(new OkModel(entity, description));
+            var response = new ObjectResult(new OkModel(entity));
             response.StatusCode = 200;
 
             return response;
@@ -18,8 +16,7 @@ namespace CadastroDeClientes.Responses
 
         public static ObjectResult OkListResponse(List<GetClientDto> entity)
         {
-            var description = "descrição qualquer";
-            var response = new ObjectResult(new OkListModel(entity, description));
+            var response = new ObjectResult(new OkListModel(entity));
             response.StatusCode = 200;
 
             return response;
@@ -27,8 +24,7 @@ namespace CadastroDeClientes.Responses
 
         public static ObjectResult CreateResponse(CreateClientDto entity) 
         {
-            var description = "descrição qualquer";
-            var response = new ObjectResult(new CreateModel(entity, description));
+            var response = new ObjectResult(new CreateModel(entity));
             response.StatusCode = 201;
 
             return response;

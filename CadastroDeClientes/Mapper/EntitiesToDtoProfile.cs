@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CadastroDeClientes.Dtos;
+using CadastroDeClientes.Dtos.Client;
 using CadastroDeClientes.Models;
 
 namespace CadastroDeClientes.Mapper
@@ -11,8 +11,11 @@ namespace CadastroDeClientes.Mapper
             CreateMap<ClientModel, GetClientDto>()
                 .ReverseMap();
 
-            CreateMap<ClientModel, CreateClientDto>()
+            CreateMap<ClientModel, GetClientDto>()
                 .ForMember(member => member.FullName, map => map.MapFrom(src => $"{src.Name} {src.LastName}"));
+
+            CreateMap<ClientModel, CreateClientDto>()
+                .ReverseMap();
         }
     }
 }

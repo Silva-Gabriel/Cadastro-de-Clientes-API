@@ -1,13 +1,12 @@
-﻿using CadastroDeClientes.Dtos;
+﻿using CadastroDeClientes.Dtos.Client;
 
 namespace CadastroDeClientes.Models.Response
 {
-    public class OkModel : ResponseModel
+    public class OkModel
     {
         public GetClientDto Entity { get; set; }
-        public OkModel(GetClientDto entity, string description) {
+        public OkModel(GetClientDto entity) {
             Entity = entity;
-            Description = description;
         }
     }
 }
