@@ -177,7 +177,7 @@ namespace CadastroDeClientes.Services.Client
             return SucessResponse.OkListResponse(response);
         }
 
-        public async Task<ActionResult<List<ClientModel>>> GetAllFullAcess()
+        public async Task<ActionResult<List<ClientModelDto>>> GetAllFullAcess()
         {
             var clients = await _context.Clients.ToListAsync();
 

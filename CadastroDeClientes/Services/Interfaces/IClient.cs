@@ -7,7 +7,7 @@ namespace CadastroDeClientes.Service.Interfaces
     public interface IClient
     {
         Task<ActionResult<GetClientDto>> Create(CreateClientDto client);
-        Task<ActionResult<List<ClientModel>>> GetAllFullAcess();
+        Task<ActionResult<List<ClientModelDto>>> GetAllFullAcess();
         Task<ActionResult<List<GetClientDto>>> GetAll();
         ActionResult<GetClientDto> Get(long id);
         Task<ActionResult<ClientModel>> Delete(long id);

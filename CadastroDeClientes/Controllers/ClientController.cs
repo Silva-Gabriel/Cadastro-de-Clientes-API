@@ -42,8 +42,8 @@ namespace CadastroDeClientes.Controllers
         /// </remarks>
         /// <returns>Lista de clientes completa</returns>
         [HttpGet("Admin")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<ClientModel>>> GetAllFullAcess()
+        [SwaggerResponse(200, "Success", typeof(List<ClientModelDto>))]
+        public async Task<ActionResult<List<ClientModelDto>>> GetAllFullAcess()
         {
             var clients = await _iclient.GetAllFullAcess();
             return clients;
@@ -57,7 +57,7 @@ namespace CadastroDeClientes.Controllers
         /// </remarks>
         /// <returns>Lista de clientes</returns>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [SwaggerResponse(200, "Success", typeof(List<GetClientDto>))]
         public async Task<ActionResult<List<GetClientDto>>> GetAll() {
             var clients = await _iclient.GetAll();
             return clients;
@@ -73,6 +73,7 @@ namespace CadastroDeClientes.Controllers
         /// <returns>Cliente específico</returns>
         /// <response code="404">NotFound</response>
         [HttpGet("{id}")]
+        [SwaggerResponse(200, "Success", typeof(GetClientDto))]
         public ActionResult<GetClientDto> Get(long id)
         {
             var client = _iclient.Get(id);
