@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroDeClientes.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231122233830_client-migration")]
+    [Migration("20231128194343_client-migration")]
     partial class clientmigration
     {
         /// <inheritdoc />
@@ -69,15 +69,13 @@ namespace CadastroDeClientes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("AlternativeEmailModelId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("AlternativeEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("EmailModelId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AlternativeEmailModelId");
 
                     b.HasIndex("EmailModelId");
 
@@ -93,18 +91,22 @@ namespace CadastroDeClientes.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ClientModelId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Region")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ZipCode")
+                    b.Property<string>("Zipcode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -122,9 +124,6 @@ namespace CadastroDeClientes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("AlternativeEmail")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("ClientModelId")
                         .HasColumnType("bigint");
 
@@ -134,8 +133,7 @@ namespace CadastroDeClientes.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientModelId")
-                        .IsUnique();
+                    b.HasIndex("ClientModelId");
 
                     b.ToTable("Emails");
                 });
@@ -172,12 +170,8 @@ namespace CadastroDeClientes.Migrations
 
             modelBuilder.Entity("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", b =>
                 {
-                    b.HasOne("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", null)
-                        .WithMany("AlternativeEmails")
-                        .HasForeignKey("AlternativeEmailModelId");
-
                     b.HasOne("CadastroDeClientes.Models.SubModels.EmailModel", "Email")
-                        .WithMany()
+                        .WithMany("AlternativeEmails")
                         .HasForeignKey("EmailModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -188,7 +182,7 @@ namespace CadastroDeClientes.Migrations
             modelBuilder.Entity("CadastroDeClientes.Models.SubModels.AddressModel", b =>
                 {
                     b.HasOne("CadastroDeClientes.Models.ClientModel", "Client")
-                        .WithMany("Addresses")
+                        .WithMany()
                         .HasForeignKey("ClientModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -199,8 +193,8 @@ namespace CadastroDeClientes.Migrations
             modelBuilder.Entity("CadastroDeClientes.Models.SubModels.EmailModel", b =>
                 {
                     b.HasOne("CadastroDeClientes.Models.ClientModel", "Client")
-                        .WithOne("Emails")
-                        .HasForeignKey("CadastroDeClientes.Models.SubModels.EmailModel", "ClientModelId")
+                        .WithMany()
+                        .HasForeignKey("ClientModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -210,7 +204,7 @@ namespace CadastroDeClientes.Migrations
             modelBuilder.Entity("CadastroDeClientes.Models.SubModels.PhoneModel", b =>
                 {
                     b.HasOne("CadastroDeClientes.Models.ClientModel", "Client")
-                        .WithMany("Phones")
+                        .WithMany()
                         .HasForeignKey("ClientModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -218,16 +212,7 @@ namespace CadastroDeClientes.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("CadastroDeClientes.Models.ClientModel", b =>
-                {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Emails");
-
-                    b.Navigation("Phones");
-                });
-
-            modelBuilder.Entity("CadastroDeClientes.Models.SubModelCliente.AlternativeEmailModel", b =>
+            modelBuilder.Entity("CadastroDeClientes.Models.SubModels.EmailModel", b =>
                 {
                     b.Navigation("AlternativeEmails");
                 });

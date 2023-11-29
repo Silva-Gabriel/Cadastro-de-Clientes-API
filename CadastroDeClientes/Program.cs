@@ -1,11 +1,14 @@
 using CadastroDeClientes.Context;
 using CadastroDeClientes.Dtos.Client;
 using CadastroDeClientes.Mapper;
+using CadastroDeClientes.Models.SubModelCliente;
 using CadastroDeClientes.Service.Interfaces;
+using CadastroDeClientes.Services.AlternativeEmail;
 using CadastroDeClientes.Services.Client;
+using CadastroDeClientes.Services.Email;
+using CadastroDeClientes.Services.Interfaces;
 using CadastroDeClientes.Swagger;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +42,8 @@ builder.Services.AddSwaggerGen(c => {
 
 // Configuração de injeção de dependência do IClient na ClientService
 builder.Services.AddScoped<IClient, ClientService>();
+builder.Services.AddScoped<IEmail, EmailService>();
+builder.Services.AddScoped<IAlternativeEmail, AlternativeEmailService>();
 
 // Configuração AutoMapper
 builder.Services.AddAutoMapper(typeof(EntitiesToDtoProfile));
