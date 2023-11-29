@@ -8,9 +8,9 @@ namespace CadastroDeClientes.Controllers
     [ApiController]
     public class AlternativeEmailController : ControllerBase
     {
-        private readonly IAlternativeEmail _ialternativeEmail;
+        private readonly IAlternativeEmailService _ialternativeEmail;
 
-        public AlternativeEmailController(IAlternativeEmail ialternativeEmail)
+        public AlternativeEmailController(IAlternativeEmailService ialternativeEmail)
         {
             _ialternativeEmail = ialternativeEmail;
         }

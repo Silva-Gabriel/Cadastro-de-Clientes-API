@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CadastroDeClientes.Services.AlternativeEmail
 {
-    public class AlternativeEmailService : IAlternativeEmail
+    public class AlternativeEmailService : IAlternativeEmailService
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;

@@ -1,40 +1,27 @@
-﻿using CadastroDeClientes.Dtos.Client;
+﻿using Azure;
+using CadastroDeClientes.Dtos.Client;
 using CadastroDeClientes.Models;
 using CadastroDeClientes.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeClientes.Responses
 {
-    public class SucessResponse
+    public class SucessResponse<T> : ResultResponse
     {
-        public static ObjectResult OkResponse(GetClientDto entity)
+        public static ObjectResult Ok(T entity)
         {
-            var response = new ObjectResult(new OkModel(entity));
-            response.StatusCode = 200;
+            IsSucess = true;
+            var response = new ObjectResult(new { IsSucess, entity, StatusCode = StatusCodes.Status200OK });
+            response.StatusCode = StatusCodes.Status200OK;
 
             return response;
         }
 
-        public static ObjectResult OkListResponse(List<GetClientDto> entity)
+        public static ObjectResult Created(T entity) 
         {
-            var response = new ObjectResult(new OkListModel(entity));
-            response.StatusCode = 200;
-
-            return response;
-        }
-
-        public static ObjectResult OkListFulAccessResponse(List<ClientModel> entity)
-        {
-            var response = new ObjectResult(entity);
-            response.StatusCode = 200;
-
-            return response;
-        }
-
-        public static ObjectResult CreateResponse(ClientModel entity) 
-        {
-            var response = new ObjectResult(new GetClientDto(entity));
-            response.StatusCode = 201;
+            IsSucess = true;
+            var response = new ObjectResult(new { IsSucess, entity, StatusCode = StatusCodes.Status201Created });
+            response.StatusCode = StatusCodes.Status201Created;
 
             return response;
         }

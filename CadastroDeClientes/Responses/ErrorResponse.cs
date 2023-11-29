@@ -1,29 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeClientes.Responses
 {
-    public class ErrorResponse
+    public class ErrorResponse : ResultResponse
     {
+        
         public static ObjectResult EntityNotFoundResponse()
         {
-            var errorMessage = "entity-not-found";
-            var statusCode = 404;
-            var response = new ObjectResult(new { errorMessage, statusCode });
-            response.StatusCode = statusCode;
+            IsSucess = false;
+            var response = new ObjectResult(new { IsSucess, ErrorMessage = "entity-not-found", StatusCode = StatusCodes.Status404NotFound });
+            response.StatusCode = StatusCodes.Status400BadRequest;
 
             return response;
         }
 
         public static ObjectResult UserAlreadyExists()
         {
-            var errorMessage = "user-already-exists";
-            var statusCode = 409;
-            var response = new ObjectResult(new { errorMessage, statusCode });
-            response.StatusCode = statusCode;
+            IsSucess = false;
+            var response = new ObjectResult(new { IsSucess, ErrorMessage = "user-already-exists", StatusCode = StatusCodes.Status409Conflict });
+            response.StatusCode = StatusCodes.Status400BadRequest;
 
             return response;
+
         }
 
+        // TODO: Refatorar
         public static ObjectResult InvalidNameAndLastName(string errorMessage)
         {
             var errors = new string[2];
@@ -39,40 +41,38 @@ namespace CadastroDeClientes.Responses
             return response;
         }
 
+        // TODO: Refatorar
         public static ObjectResult InvalidNameOrLastName(List<string> errorMessage)
         {
-            var statusCode = 400;
-            var response = new ObjectResult(new { errorMessage, statusCode });
-            response.StatusCode = statusCode;
+            IsSucess = false;
+            var response = new ObjectResult(new { IsSucess, errorMessage, StatusCode = StatusCodes.Status400BadRequest });
+            response.StatusCode = StatusCodes.Status400BadRequest;
 
             return response;
         }
 
         public static ObjectResult InvalidBirthdate()
         {
-            var errorMessage = "invalid-birthdate";
-            var statusCode = 400;
-            var response = new ObjectResult(new { errorMessage, statusCode });
-            response.StatusCode = statusCode;
+            IsSucess = false;
+            var response = new ObjectResult(new { IsSucess, ErrorMessage = "invalid-birthdate", StatusCode = StatusCodes.Status400BadRequest });
+            response.StatusCode = StatusCodes.Status400BadRequest;
 
             return response;
         }
 
         public static ObjectResult EntityIsAlreadyInactive()
         {
-            var errorMessage = "entity-already-inactive";
-            var statusCode = 409;
-            var response = new ObjectResult(new { errorMessage, statusCode });
-            response.StatusCode = statusCode;
+            IsSucess = false;
+            var response = new ObjectResult(new { IsSucess, ErrorMessage = "entity-is-inactive", StatusCode = StatusCodes.Status409Conflict });
+            response.StatusCode = StatusCodes.Status409Conflict;
 
             return response;
         }
         public static ObjectResult CPFDigitsNotMatch()
         {
-            var errorMessage = "cpf-check-digits-not-match";
-            var statusCode = 400;
-            var response = new ObjectResult(new { errorMessage, statusCode });
-            response.StatusCode = statusCode;
+            IsSucess = false;
+            var response = new ObjectResult(new { IsSucess, ErrorMessage = "cpf-check-digits-not-match", StatusCode = StatusCodes.Status400BadRequest });
+            response.StatusCode = StatusCodes.Status400BadRequest;
 
             return response;
         }

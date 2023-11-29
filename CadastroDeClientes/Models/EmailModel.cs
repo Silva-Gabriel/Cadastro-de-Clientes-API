@@ -2,7 +2,6 @@
 
 using CadastroDeClientes.Models.SubModelCliente;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace CadastroDeClientes.Models.SubModels
 {
@@ -11,12 +10,9 @@ namespace CadastroDeClientes.Models.SubModels
         public long Id { get; set; }
         [Required]
         [EmailAddress]
-        public string MainEmail { get; set; }
-        [EmailAddress]
+        public string Email { get; set; }
         public List<AlternativeEmailModel> AlternativeEmails { get; set; }
-        [JsonIgnore]
         public ClientModel Client { get; set; }
         public long ClientModelId { get; set; }
     }
-
 }

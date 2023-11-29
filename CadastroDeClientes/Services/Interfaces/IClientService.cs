@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeClientes.Service.Interfaces
 {
-    public interface IClient
+    public interface IClientService
     {
         Task<ActionResult<GetClientDto>> Create(CreateClientDto client);
         Task<ActionResult<List<ClientModelDto>>> GetAllFullAcess();

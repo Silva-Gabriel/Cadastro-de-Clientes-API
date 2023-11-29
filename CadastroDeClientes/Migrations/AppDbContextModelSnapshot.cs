@@ -124,7 +124,7 @@ namespace CadastroDeClientes.Migrations
                     b.Property<long>("ClientModelId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("MainEmail")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

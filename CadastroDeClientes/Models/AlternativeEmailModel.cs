@@ -9,7 +9,6 @@ namespace CadastroDeClientes.Models.SubModelCliente
         public long Id { get; set; }
         [EmailAddress]
         public string AlternativeEmail { get; set; }
-        [JsonIgnore]
         public EmailModel Email { get; set; }
         public long EmailModelId { get; set; }
     }

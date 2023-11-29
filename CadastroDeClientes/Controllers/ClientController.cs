@@ -10,8 +10,8 @@ namespace CadastroDeClientes.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IClient _iclient;
-        public ClientController(IClient iclient)
+        private readonly IClientService _iclient;
+        public ClientController(IClientService iclient)
         {
             _iclient = iclient;
         }

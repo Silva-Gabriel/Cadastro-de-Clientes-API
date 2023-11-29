@@ -83,6 +83,33 @@
             <response code="404">NotFound</response>>
             <response code="409">Conflict</response>>
         </member>
+        <member name="M:CadastroDeClientes.Controllers.EmailController.Create(System.Int64,CadastroDeClientes.Dtos.Email.EmailModelDto)">
+            <summary>
+            Cadastrar e-mail principal
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint cadastra o e-mail principal relacionando-o a um cliente</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <param name="email">Email principal</param>
+            <response code="400">BadRequest</response>>
+            <response code="404">NotFound</response>>
+            <response code="409">Conflict</response>>
+            <returns>O Cliente com o email recém cadastrado</returns>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.EmailController.Get(System.Int64)">
+            <summary>
+            Obtém e-mail por id
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint obtém o e-mail principal a partir do id do cliente</h1>
+            </remarks>
+            <param name="id">identificador do cliente</param>
+            <response code="400">BadRequest</response>>
+            <response code="404">NotFound</response>>
+            <response code="409">Conflict</response>>
+            <returns>O E-mail cadastrado</returns>
+        </member>
         <member name="T:CadastroDeClientes.Migrations.clientmigration">
             <inheritdoc />
         </member>

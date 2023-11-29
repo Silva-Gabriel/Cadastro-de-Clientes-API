@@ -58,7 +58,7 @@ namespace CadastroDeClientes.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MainEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClientModelId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

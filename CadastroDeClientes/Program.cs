@@ -41,9 +41,9 @@ builder.Services.AddSwaggerGen(c => {
 });
 
 // Configuração de injeção de dependência do IClient na ClientService
-builder.Services.AddScoped<IClient, ClientService>();
-builder.Services.AddScoped<IEmail, EmailService>();
-builder.Services.AddScoped<IAlternativeEmail, AlternativeEmailService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAlternativeEmailService, AlternativeEmailService>();
 
 // Configuração AutoMapper
 builder.Services.AddAutoMapper(typeof(EntitiesToDtoProfile));

@@ -24,7 +24,13 @@ namespace CadastroDeClientes.Mapper
             CreateMap<ClientModel, EditClientDto>()
                 .ReverseMap();
 
+            CreateMap<EmailModel, GetEmailModelDto>()
+                .ReverseMap();
+            
             CreateMap<EmailModel, EmailModelDto>()
+                .ReverseMap();
+
+            CreateMap<GetEmailModelDto, EmailModelDto>()
                 .ReverseMap();
 
             CreateMap<AlternativeEmailModel, AlternativeEmailModelDto>()

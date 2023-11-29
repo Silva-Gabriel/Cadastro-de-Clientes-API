@@ -17,12 +17,12 @@ namespace CadastroDeClientes.Swagger
                 }
 
                 var example = new Dictionary<string, object>
-            {
-                { "CPF", "395.259.438-52" },
-                { "Name", "Jean" },
-                { "LastName", "Carlos" },
-                { "Birthdate", new DateTime(2000, 7, 8)}
-            };
+                {
+                    { "CPF", "395.259.438-52" },
+                    { "Name", "Jean" },
+                    { "LastName", "Carlos" },
+                    { "Birthdate", new DateTime(2000, 7, 8)}
+                };
 
                 var mediaType = operation.RequestBody.Content.FirstOrDefault().Value;
                 if (mediaType != null)

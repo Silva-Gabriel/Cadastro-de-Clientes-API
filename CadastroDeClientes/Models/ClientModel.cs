@@ -1,4 +1,5 @@
 ﻿using CadastroDeClientes.Enums;
+using CadastroDeClientes.Models.SubModels;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 

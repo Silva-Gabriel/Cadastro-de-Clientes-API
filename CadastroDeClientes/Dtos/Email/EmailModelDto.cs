@@ -1,5 +1,4 @@
-﻿using CadastroDeClientes.Dtos.Email.AlternativeEmail;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CadastroDeClientes.Dtos.Email
 {
@@ -7,7 +6,6 @@ namespace CadastroDeClientes.Dtos.Email
     {
         [Required]
         [EmailAddress]
-        public string MainEmail { get; set; }
-        public List<AlternativeEmailModelDto> AlternativeEmails { get; set; }
+        public string Email { get; set; }
     }
 }

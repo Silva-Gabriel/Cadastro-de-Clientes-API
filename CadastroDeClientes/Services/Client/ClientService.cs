@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace CadastroDeClientes.Services.Client
 {
-    public class ClientService : IClient
+    public class ClientService : IClientService
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ namespace CadastroDeClientes.Services.Client
             // Retira os pontos e traços do CPF enviado no request
             var cpf = Regex.Replace(clientModel.CPF, "[.-]", "");
             // Faz a consulta do cpf na base para verificar se existem clientes cadastrados com ele
-            var consultCPF = _context.Clients.Where(c => c.CPF == cpf).ToList();
+            var consultCPF =  await _context.Clients.Where(c => c.CPF == cpf).ToListAsync();
 
             // Faz a validação do primeiro digito verificador
             var firstDigit = CPFDigitValidation(cpf.Substring(0, 9), 10);
@@ -89,7 +89,7 @@ namespace CadastroDeClientes.Services.Client
             await _context.SaveChangesAsync();
 
             // retorna um objeto de resposta personalizado
-            return SucessResponse.CreateResponse(clientModel);
+            return SucessResponse<ClientModel>.Created(clientModel);
         }
 
         public async Task<ActionResult<ClientModel>> Delete(long id)
@@ -153,7 +153,7 @@ namespace CadastroDeClientes.Services.Client
 
             var response = _mapper.Map<GetClientDto>(client);
 
-            return SucessResponse.OkResponse(response);
+            return SucessResponse<GetClientDto>.Ok(response);
         }
 
         public ActionResult<GetClientDto> Get(long id)
@@ -165,7 +165,7 @@ namespace CadastroDeClientes.Services.Client
 
             var response = _mapper.Map<GetClientDto>(client);
 
-            return SucessResponse.OkResponse(response);
+            return SucessResponse<GetClientDto>.Ok(response);
         }
 
         public async Task<ActionResult<List<GetClientDto>>> GetAll()
@@ -174,14 +174,15 @@ namespace CadastroDeClientes.Services.Client
 
             var response = _mapper.Map<List<GetClientDto>>(clients);
 
-            return SucessResponse.OkListResponse(response);
+            return SucessResponse<List<GetClientDto>>.Ok(response);
         }
 
         public async Task<ActionResult<List<ClientModelDto>>> GetAllFullAcess()
         {
             var clients = await _context.Clients.ToListAsync();
+            var response = _mapper.Map<List<ClientModelDto>>(clients);
 
-            return SucessResponse.OkListFulAccessResponse(clients);
+            return SucessResponse<List<ClientModelDto>>.Ok(response);
         }
 
         public async Task<ActionResult<GetClientDto>> Inactive(long id)
@@ -201,7 +202,7 @@ namespace CadastroDeClientes.Services.Client
 
             var response = _mapper.Map<GetClientDto>(client);
 
-            return SucessResponse.OkResponse(response);
+            return SucessResponse<GetClientDto>.Ok(response);
         }
 
         static string CPFDigitValidation(string cpf, int number)

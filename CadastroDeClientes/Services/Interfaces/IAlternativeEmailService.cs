@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroDeClientes.Services.Interfaces
 {
-    public interface IAlternativeEmail
+    public interface IAlternativeEmailService
     {
         Task<ActionResult<List<AlternativeEmailModel>>> Get(long id);
     }

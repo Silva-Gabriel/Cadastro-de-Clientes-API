@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroDeClientes.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231128194343_client-migration")]
+    [Migration("20231129133859_client-migration")]
     partial class clientmigration
     {
         /// <inheritdoc />
@@ -127,7 +127,7 @@ namespace CadastroDeClientes.Migrations
                     b.Property<long>("ClientModelId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("MainEmail")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
