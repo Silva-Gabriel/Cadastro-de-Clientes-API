@@ -1,9 +1,9 @@
 <h1 align="center">API CADASTRO DE CLIENTES</h1>
-<p>! No momento alguns itens do checklist não estão em ordem correta</p>
+<p>! Checklist desatualizado, irei atualizá-lo no decorrer da semana, pois tiveram muitas atualizações</p>
 <pre>
     ✅ - Criar as classes Service, Models e AppDbContext
     ✅ - Criar classe Enum para um atributo da Model Client "StatusClient"
-    ✘ - Validação de Data Annotations
+    ✅ - Validação de Data Annotations
     ✅ - Adicionar configurações do DbContext na classe Program
     ✅ - Criar o migration inicial
     ✅ - Criar a regra de negócio básica para funcionamento dos endpoints na classe Service
@@ -13,9 +13,8 @@
     ✅ - Criar os Dtos
     ✅ - Criar uma classe SucessResponse e ErrorResponse para lidar com os retornos das chamadas personalizados
     ✅ - Validação de digitos verificadores no CPF
-    ✘ - Validação de dados obrigatórios
+    ✅ - Validação de dados obrigatórios
     ✘ - Criação dos dados históricos de inclusão(id, usuário,datahora,etapa, objeto dos dados)
-    ✘ - Criação de Exceptions personalizadas
     ✘ - Chamadas de API's externas para fazer validações nos dados;
     ✘ - Configuração IBM MQ no .NET 6
     ✘ - Conexão e envio de chamadas para o IBM MQ
