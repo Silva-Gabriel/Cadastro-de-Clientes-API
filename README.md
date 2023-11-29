@@ -14,13 +14,15 @@
     ✅ - Criar uma classe SucessResponse e ErrorResponse para lidar com os retornos das chamadas personalizados
     ✅ - Validação de digitos verificadores no CPF
     ✅ - Validação de dados obrigatórios
+    ✅ - Validar se o cliente já existe na base a partir do cpf
+    ✅ - Validar caracteres consecutivos ex: alesssandro (3 "s"), annna (3 "n") etc.
+    ✅ - Validatar palavras repetidas ex: gabrielgabriel, gabrielgabrielgabriel, testtest, marcomarcomarcos
+    ✅ - Validar sequencia de caracteres: alfabeto ex: abc, defg, gfed, xyz, mnopqrs, e para letras do teclado: qwer,asdfg,zxcvb, ewq, fdsa, cxzerty,hjklmnbv, se aparecer um sequencial desses caracteres em 3 seguidos em qualquer parte da string, ela será validada.
     ✘ - Criação dos dados históricos de inclusão(id, usuário,datahora,etapa, objeto dos dados)
     ✘ - Chamadas de API's externas para fazer validações nos dados;
     ✘ - Configuração IBM MQ no .NET 6
     ✘ - Conexão e envio de chamadas para o IBM MQ
     ✘ - Criação de um worker para ouvir o que chega no IBM MQ e enviar para o banco de dados
-    ✘ - Criar códigos para mensagens de erro
-    ✘ - Traduzir mensagens de erro e devolver para o usuário com base no código
 </pre>
 
 <h3>API Swagger</h3>
