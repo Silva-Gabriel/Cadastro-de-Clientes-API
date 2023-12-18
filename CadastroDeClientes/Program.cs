@@ -1,7 +1,5 @@
 using CadastroDeClientes.Context;
-using CadastroDeClientes.Dtos.Client;
 using CadastroDeClientes.Mapper;
-using CadastroDeClientes.Models.SubModelCliente;
 using CadastroDeClientes.Service.Interfaces;
 using CadastroDeClientes.Services.AlternativeEmail;
 using CadastroDeClientes.Services.Client;

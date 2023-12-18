@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CadastroDeClientes</name>
+    </assembly>
+    <members>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Create(CadastroDeClientes.Dtos.Client.CreateClientDto)">
+            <summary>
+            Cadastrar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint cadastra um cliente na base de dados de clientes</h1>
+            </remarks>
+            <param name="clientDto">Dados do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="409">Conflict</response>>
+            <response code="400">BadRequest</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.GetAllFullAcess">
+            <summary>
+            Obter lista de clientes completa
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint retorna todos os dados de todos os clientes cadastrados</h1>
+            </remarks>
+            <returns>Lista de clientes completa</returns>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.GetAll">
+            <summary>
+            Obter lista de clientes 
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint retorna todos os clientes da base de dados</h1>
+            </remarks>
+            <returns>Lista de clientes</returns>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Get(System.Int64)">
+            <summary>
+            Obter um cliente específico
+            </summary>
+            <param name="id">Identificador do cliente</param>
+            <remarks>
+            <h1 align="center">Este endpoint retorna um cliente específico a partir do id informado no request</h1>
+            </remarks>
+            <returns>Cliente específico</returns>
+            <response code="404">NotFound</response>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Delete(System.Int32)">
+            <summary>
+            Deletar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint deleta um cliente a partir do id informado no request</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="204">NoContent</response>>
+            <response code="404">BadRequest</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Update(System.Int64,CadastroDeClientes.Dtos.Client.EditClientDto)">
+            <summary>
+            Atualizar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint atualiza um cliente existente a partir do id informado no request</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <param name="clientDto">Identificador do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="409">Conflict</response>>
+            <response code="400">BadRequest</response>>
+            <response code="404">NotFound</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.ClientController.Inactive(System.Int32)">
+            <summary>
+            Inativar um cliente
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint inativa um cliente existente e ativo a partir do id informado no request</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <returns>Cliente Recém-criado</returns>
+            <response code="404">NotFound</response>>
+            <response code="409">Conflict</response>>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.EmailController.Create(System.Int64,CadastroDeClientes.Dtos.Email.EmailModelDto)">
+            <summary>
+            Cadastrar e-mail principal
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint cadastra o e-mail principal relacionando-o a um cliente</h1>
+            </remarks>
+            <param name="id">Identificador do cliente</param>
+            <param name="email">Email principal</param>
+            <response code="400">BadRequest</response>>
+            <response code="404">NotFound</response>>
+            <response code="409">Conflict</response>>
+            <returns>O Cliente com o email recém cadastrado</returns>
+        </member>
+        <member name="M:CadastroDeClientes.Controllers.EmailController.Get(System.Int64)">
+            <summary>
+            Obtém e-mail por id
+            </summary>
+            <remarks>
+            <h1 align="center">Este endpoint obtém o e-mail principal a partir do id do cliente</h1>
+            </remarks>
+            <param name="id">identificador do cliente</param>
+            <response code="400">BadRequest</response>>
+            <response code="404">NotFound</response>>
+            <response code="409">Conflict</response>>
+            <returns>O E-mail cadastrado</returns>
+        </member>
+        <member name="T:CadastroDeClientes.Migrations.clientmigration">
+            <inheritdoc />
+        </member>
+        <member name="M:CadastroDeClientes.Migrations.clientmigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CadastroDeClientes.Migrations.clientmigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CadastroDeClientes.Migrations.clientmigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

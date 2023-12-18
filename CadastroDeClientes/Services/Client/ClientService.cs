@@ -19,8 +19,13 @@ namespace CadastroDeClientes.Services.Client
             _context = context;
             _mapper = mapper;
         }
+        public ClientService(){}
         public async Task<ActionResult<GetClientDto>> Create(CreateClientDto clientDto)
         {
+            // Verifica se o cliente está nulo
+            if (IsClientNull(clientDto))
+                return ErrorResponse.EntityNotFoundResponse();
+            
             // Mapeia a entidade clientDto para ClientModel que é a classe principal com todos os campos
             var clientModel = _mapper.Map<ClientModel>(clientDto);
 
@@ -28,15 +33,6 @@ namespace CadastroDeClientes.Services.Client
             var cpf = Regex.Replace(clientModel.CPF, "[.-]", "");
             // Faz a consulta do cpf na base para verificar se existem clientes cadastrados com ele
             var consultCPF =  await _context.Clients.Where(c => c.CPF == cpf).ToListAsync();
-
-            // Faz a validação do primeiro digito verificador
-            var firstDigit = CPFDigitValidation(cpf.Substring(0, 9), 10);
-            // Faz a validação do segundo digito verificador
-            var secondDigit = CPFDigitValidation((cpf.Substring(0, 9) + firstDigit), 11);
-            // Pega os dois digitos verificadores que vieram do request
-            var digits_verifier = cpf.Substring(9, 2);
-            // Pega os dois digitos verificadores gerados na validação
-            var digits = (firstDigit + secondDigit).ToString();
 
             // Valida se a sequência de caracteres é válida para o nome
             var isValidSequenceOfName = IsValidSequenceOfCaracteres(clientModel.Name);
@@ -55,14 +51,8 @@ namespace CadastroDeClientes.Services.Client
             // Lista para agregar os erros de nome e sobrenome respectivamente
             var name_validation_errors = new List<string>();
 
-            // Verifica se o cliente já existe
-            if (clientModel == null)
-            {
-                return ErrorResponse.EntityNotFoundResponse();
-            }
-
             // Validação de CPF
-            if (digits_verifier != digits)
+            if (!CPFDigitValidation(cpf))
                 return ErrorResponse.CPFDigitsNotMatch();
 
             if (consultCPF.Count >= 1)
@@ -205,32 +195,65 @@ namespace CadastroDeClientes.Services.Client
             return SucessResponse<GetClientDto>.Ok(response);
         }
 
-        static string CPFDigitValidation(string cpf, int number)
+        public bool IsClientNull(CreateClientDto clientDto)
         {
-            var cpf_validation = cpf.ToArray();
-
-            var digits = CharToInt(cpf_validation);
-            var result = 0;
-
-            foreach (var digit in digits)
-            {
-                result = result + digit * number;
-                Console.WriteLine($"{number} x {digit} = {number * digit} > {result}");
-                number--;
-            }
-
-            Console.WriteLine("Verificação Primeiro Digito: " + result);
-            result = result % 11;
-
-            if (result == 1 || result == 0)
-                return "0";
-            else
-                result = 11 - result;
-
-            return result.ToString();
+            return clientDto == null;
         }
 
-        static List<int> CharToInt(char[] charArray)
+        public bool CPFDigitValidation(string cpf)
+        {
+            var digits_verifier = cpf.Substring(9, 2);
+            string result = "";
+
+            for(int i = 1; i <= 2; i++)
+            {
+                if(i == 1)
+                {
+                    var cpfWithoutCheckDigitsInt = CharToInt(cpf[..9].ToArray());
+                    var cpfWithoutCheckFirstDigit = cpf[..9].ToArray().Count() + 1;
+                    var total = 0;
+
+                    foreach (var digit in cpfWithoutCheckDigitsInt)
+                    {
+                        total = total + digit * cpfWithoutCheckFirstDigit;
+                        cpfWithoutCheckFirstDigit--;
+                    }
+
+                    total = total % 11;
+
+                    if (total == 1 || total == 0)
+                        total = 0;
+                    else
+                        total = 11 - total;
+                        
+                    result = result + total.ToString();
+
+                } 
+                else{
+                    var cpfWithoutCheckDigitsInt = CharToInt((cpf[..9] + result).ToArray());
+                    var cpfWithoutCheckSecondDigit = (cpf[..9] + result).ToArray().Count() + 1;
+                    var total = 0;
+
+                    foreach (var digit in cpfWithoutCheckDigitsInt)
+                    {
+                        total = total + digit * cpfWithoutCheckSecondDigit;
+                        cpfWithoutCheckSecondDigit--;
+                    }
+
+                    total = total % 11;
+
+                    if (total == 1 || total == 0)
+                        total = 0;
+                    else
+                        total = 11 - total;
+                        
+                    result = result + total.ToString();
+                }
+            }
+            return result == digits_verifier;
+        }
+
+        public static List<int> CharToInt(char[] charArray)
         {
             var digits = new List<int>();
             int validDigit = 0;
@@ -242,14 +265,13 @@ namespace CadastroDeClientes.Services.Client
 
                     validDigit = digit - '0';
                 }
-
                 digits.Add(validDigit);
             }
 
             return digits;
         }
 
-        static bool IsValidNumberOfWords(string word)
+        public static bool IsValidNumberOfWords(string word)
         {
             var regex_code_two_group = new Regex(@"\b(\w+)\1\b", RegexOptions.IgnoreCase);
             var regex_code_three_group = new Regex(@"\b(\w+)\1\1\b", RegexOptions.IgnoreCase);
@@ -259,10 +281,10 @@ namespace CadastroDeClientes.Services.Client
 
             return false;
         }
-        static bool IsValidSequenceOfCaracteres(string word)
+        public static bool IsValidSequenceOfCaracteres(string word)
         {
-            var sequence_keyboard = "qwertyuiopasdfghjklçzxcvbnm";
-            var sequence_alphabet = "abcdefghijklmnopqrstuvwxyzáéíóúàâêôãõüç";
+            const string sequence_keyboard = "qwertyuiopasdfghjklçzxcvbnm";
+            const string sequence_alphabet = "abcdefghijklmnopqrstuvwxyzáéíóúàâêôãõüç";
 
             for (int i = 0; i < word.Length - 3; i++)
             {
@@ -273,12 +295,12 @@ namespace CadastroDeClientes.Services.Client
                     return true;
                 }
 
-                Console.WriteLine(i);
+                // Console.WriteLine(i);
             }
             return false;
         }
 
-        static bool IsValidMaximumLettersRepetition(string word) {
+        public static bool IsValidMaximumLettersRepetition(string word) {
             var regex_code = @"(.)\1{2,}";
 
             if (Regex.IsMatch(word, regex_code))

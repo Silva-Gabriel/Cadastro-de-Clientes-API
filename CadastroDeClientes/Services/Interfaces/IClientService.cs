@@ -13,5 +13,7 @@ namespace CadastroDeClientes.Service.Interfaces
         Task<ActionResult<ClientModel>> Delete(long id);
         Task<ActionResult<GetClientDto>> Edit(long id, EditClientDto client);
         Task<ActionResult<GetClientDto>> Inactive(long id);
+        bool CPFDigitValidation(string cpf);
+        bool IsClientNull(CreateClientDto clientDto);
     }
 }
